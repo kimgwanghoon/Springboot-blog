@@ -17,12 +17,12 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-		<!-- 
+		<!-- 닫혀있는거 잊고 관련 어노테이션이 에러떠서 원인을 한참찾으며 삽질함  --> 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		 -->
+		 
 		<!-- 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
