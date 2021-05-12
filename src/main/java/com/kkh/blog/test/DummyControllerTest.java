@@ -39,10 +39,6 @@ public class DummyControllerTest {
 	@Transactional	//save를 하지않아도 update가 수행된다.
 	@PutMapping("/dummy/user/{id}")
 	public User updateUser(@PathVariable int id,@RequestBody User requestUser) { //json 데이터를 요청하면 MessageConverter의  Jackson lib가 변환해서 받아준다.
-		System.out.println(id);
-		System.out.println(requestUser.getPassword());
-		System.out.println(requestUser.getEmail());
-		
 		User user = userRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("수정에 실패");
 		});
@@ -88,9 +84,6 @@ public class DummyControllerTest {
 	
 	@PostMapping("/dummy/join")
 	public String join(User user) {
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getEmail());
 		user.setRole(RoleType.user);
 		userRepository.save(user);
 		return "회원가입완료";
