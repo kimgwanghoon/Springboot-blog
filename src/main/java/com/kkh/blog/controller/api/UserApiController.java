@@ -1,5 +1,7 @@
 package com.kkh.blog.controller.api;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.coyote.http11.Http11AprProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +25,19 @@ public class UserApiController {
 	@PostMapping("/api/user")
 	public ResponseDto<Integer> save(@RequestBody User user) {	
 		user.setRole(RoleType.user);	
-		int result = userService.save(user);
 		
-		return new ResponseDto<Integer>(HttpStatus.OK,result);	//자바오브젝트를 Jacson이 Json형식으로 변환해서리턴해준다.
+		userService.save(user);
+		
+		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);	//자바오브젝트를 Jacson이 Json형식으로 변환해서리턴해준다.
+	}
+	
+	@PostMapping("/api/user/login")
+	public ResponseDto<Integer> login(@RequestBody User user,HttpSession session){	
+		User okUser = userService.login(user);
+		if(okUser !=null) {
+			session.setAttribute("okUser", okUser);	//세션생성
+		}
+		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
 	}
 	
 }

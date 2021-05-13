@@ -1,9 +1,8 @@
 package com.kkh.blog.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kkh.blog.model.User;
 import com.kkh.blog.repository.UserRepository;
@@ -15,13 +14,12 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Transactional
-	public int save(User user) {
-		try {
+	public void save(User user) {
 			userRepository.save(user);
-			return 1;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return -1;
 	}
+	
+	@Transactional(readOnly = true) // select 할때 트랜잭션 시작,서비스종료시에 트랜잭션 종료(정합성)
+	public User login(User user) {
+			return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+	}	
 }

@@ -16,5 +16,5 @@
 		<button id="bth-sign" class="btn btn-primary">회원가입</button>
 	</div>
 </body>
-<script src="/blog/js/user.js"></script>
+<script src="/js/user.js"></script>
 <%@ include file="../main/footer.jsp"%>
