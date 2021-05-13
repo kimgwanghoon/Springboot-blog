@@ -5,10 +5,12 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +36,16 @@ public class DummyControllerTest {
 		return userRepository.findAll();
 	}
 	
+	@DeleteMapping("/dummy/user/{id}")
+	public String deleteUser(@PathVariable int id) {
+		try {
+			userRepository.deleteById(id);
+		}catch(EmptyResultDataAccessException e) {
+			return "삭제실패 해당id가 존재하지않습니다.";
+		}
+		return id + " 삭제";
+	}
+	
 	//save함수는 id를 전달하지 않으면 insert를 해주고
 	//save함수는 id를 전달해서 id가 존재한다면 id에 대한 데이터를 update를 수행, id가 없으면 insert해준다.
 	@Transactional	//save를 하지않아도 update가 수행된다.
@@ -47,7 +59,7 @@ public class DummyControllerTest {
 		
 		//userRepository.save(requestUser);
 		//더티 체킹
-		return null;
+		return user;
 	}
 	
 	//한페이지당 n건에 데이터를 리턴
