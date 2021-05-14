@@ -27,10 +27,13 @@ let index={
 			contentType: "application/json;charset=UTF-8", //body데이터 타입전달
 			dataType:"json"	//응답의 결과가 왔을때 기본적으로 문자열로 들어온다.(생긴게 json형태라면 ->javascript오브젝트로 변환)
 		}).done(function(resp){	//응답결과가 정상이면 실행
-			//alert("회원가입이 완료되었습니다.");
-			console.log(resp);
+			if(resp.status===200){	//전달받은 HttpStatus 응답결과가 200(성공)이면 메인페이지로 이동 
 			alert("회원가입이 완료되었습니다.");
 			location.href="/";
+			}else{
+				alert("회원가입에 실패하였습니다.");
+				location.href="joinForm";
+			}
 		}).fail(function(error){	//응답결과가 실패하면 실행
 			alert(JSON.stringify(error));
 		});
@@ -52,7 +55,12 @@ let index={
 		}).done(function(resp){	//응답결과가 정상이면 실행
 			//alert("로그인이 완료되었습니다.");
 			console.log(resp);
-			location.href="/";
+			if(resp.status===200){
+				location.href="/";
+			}else{
+				alert("로그인 실패하였습니다.");
+				location.href="loginForm";
+			}
 		}).fail(function(error){	//응답결과가 실패하면 실행
 			alert(JSON.stringify(error));
 			history.back();

@@ -36,8 +36,10 @@ public class UserApiController {
 		User okUser = userService.login(user);
 		if(okUser !=null) {
 			session.setAttribute("okUser", okUser);	//세션생성
+			return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+		}else {
+			return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR.value(),1);
 		}
-		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
 	}
 	
 }
