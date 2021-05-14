@@ -5,9 +5,6 @@ let index={
 		$("#bth-sign").on("click", ()=>{ //()=> 방식으로 호출하면 this를 바인딩, function()으로 호출 할 경우 this를 선언하지않으면 바인딩이 되지않음
 			this.save();
 		});
-		$("#btn-login").on("click", ()=>{ //()=> 방식으로 호출하면 this를 바인딩, function()으로 호출 할 경우 this를 선언하지않으면 바인딩이 되지않음
-			this.login();
-		});
 	},
 	
 	save: function(){
@@ -22,7 +19,7 @@ let index={
 		 //ajax가 통신을 성공하고 서버가 json을 리턴해주면 자동으로 자바오브젝트로 변환 
 		$.ajax({
 			type: "POST",
-			url: "/api/user",
+			url: "/auth/signup",
 			data: JSON.stringify(data),	//그냥 위의 data를 전달하면 js오브젝트, JSON.stringify(data)로 data전달시 JSON문자열로 전달 body데이터
 			contentType: "application/json;charset=UTF-8", //body데이터 타입전달
 			dataType:"json"	//응답의 결과가 왔을때 기본적으로 문자열로 들어온다.(생긴게 json형태라면 ->javascript오브젝트로 변환)
@@ -37,35 +34,6 @@ let index={
 		}).fail(function(error){	//응답결과가 실패하면 실행
 			alert(JSON.stringify(error));
 		});
-	},
-	
-	//로그인동작
-	login: function(){
-		let data={
-			username: $("#username").val(),
-			password: $("#password").val()
-		};
-		
-		$.ajax({
-			type: "POST",
-			url: "/api/user/login",
-			data: JSON.stringify(data),	
-			contentType: "application/json;charset=UTF-8", //body데이터 타입전달
-			dataType:"json"	
-		}).done(function(resp){	//응답결과가 정상이면 실행
-			//alert("로그인이 완료되었습니다.");
-			console.log(resp);
-			if(resp.status===200){
-				location.href="/";
-			}else{
-				alert("로그인 실패하였습니다.");
-				location.href="loginForm";
-			}
-		}).fail(function(error){	//응답결과가 실패하면 실행
-			alert(JSON.stringify(error));
-			history.back();
-		});
 	}
-	
 }
 index.init();
