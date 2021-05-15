@@ -17,6 +17,9 @@ import com.kkh.blog.service.PrincipalDetailService;
 @EnableGlobalMethodSecurity(prePostEnabled = true) //특정 주소 접근시 권한, 인증을 체크
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private AuthFailureHandler authFailureHandler;
 
 	@Autowired
 	private PrincipalDetailService principalDetailService; 
@@ -27,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.authorizeRequests().antMatchers("/","/auth/**","/js/**","/css/**","/image/**").permitAll()
 		.anyRequest().authenticated()	//지정한 페이지 외의 다른 모든요청은 인증이 필요하다.
 		.and().formLogin().loginPage("/auth/loginForm")	//권한,인증이 필요한 페이지 접근시 .loginPage에 지정한페이지로 이동
-		.loginProcessingUrl("/auth/procLogin").defaultSuccessUrl("/");	//시큐리티가 해당주소로 오는 요청을 가로채서 대신 로그인진행
+		.loginProcessingUrl("/auth/procLogin").defaultSuccessUrl("/")	//시큐리티가 해당주소로 오는 요청을 가로채서 대신 로그인진행
+		.failureHandler(authFailureHandler);
 	}
 	
 	@Override

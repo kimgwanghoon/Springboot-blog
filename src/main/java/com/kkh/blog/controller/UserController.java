@@ -23,4 +23,9 @@ public class UserController {
 		return "user/loginForm";
 	}
 	
+	@GetMapping("/auth/loginFail")
+	public String loginFail() {
+		return "user/loginFail";
+	}
+	
 }
