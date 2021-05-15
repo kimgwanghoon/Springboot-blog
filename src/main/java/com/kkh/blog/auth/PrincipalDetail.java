@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.kkh.blog.model.User;
 
+import lombok.Getter;
+
 //스프링 시큐리티가 로그인을 완료하면 UserDetails 타입의 오브젝트를 시큐리티의 고유한 세션저장소에 저장
+@Getter
 public class PrincipalDetail implements UserDetails{
 	private User user;	//다른객체의 인스턴스를 자신의 인스턴스 변수로 포함해서 메서드 호출기법 : 컴포지션
 	
