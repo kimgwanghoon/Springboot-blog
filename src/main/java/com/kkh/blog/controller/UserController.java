@@ -23,6 +23,11 @@ public class UserController {
 		return "user/loginForm";
 	}
 	
+	@GetMapping("/user/updateForm")
+	public String updateForm() {
+		return "user/updateForm";
+	}
+	
 	@GetMapping("/auth/loginFail")
 	public String loginFail() {
 		return "user/loginFail";
