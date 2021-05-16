@@ -27,9 +27,8 @@
 			</div>
 		</div>
 		<hr />
-<%-- ${principal.user.id} --%>
 			<c:if test="${principal.user.id == detail.user.id}">
-				<button id="btn-update" class="btn btn-warning">글 수정</button>
+				<a href="/board/${detail.id}/updateForm" class="btn btn-warning">글 수정</a>
 				<button id="btn-delete" class="btn btn-danger">글 삭제</button>
 			</c:if>
 

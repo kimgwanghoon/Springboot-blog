@@ -29,6 +29,17 @@ public class BoardService {
 		boardRepository.deleteById(id);
 	}
 	
+	@Transactional
+	public void updateService(int id,Board updateboard) {
+		Board board =boardRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("글 업데이트실패");
+		});	 
+		board.setTitle(updateboard.getTitle());
+		board.setContent(updateboard.getContent());
+		//service 종료될때 트랜잭션이 종료된다. 이때 더티체킹이 발생하면서 자동업데이트가됨. db flush
+		/* boardRepository.save(board); */
+	}
+	
 	@Transactional(readOnly = true)
 	public Page<Board> list(Pageable pageable){
 		return boardRepository.findAll(pageable);
