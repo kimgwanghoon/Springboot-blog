@@ -14,7 +14,9 @@
 			<label for="title"><h3>Title : ${detail.title}</h3></label><br>
 			<div>
 				<h6>
-					글번호 : <span id="id">${detail.id}</span>&emsp; 작성자 : <span id="username">${detail.user.username}</span>&emsp; 작성일 : <span id="createDate">${detail.createDate}</span>
+					글번호 : <span id="id">${detail.id}</span>&emsp; 
+					작성자 : <span id="username">${detail.user.username}</span>&emsp; 
+					작성일 : <span id="createDate">${detail.createDate}</span>
 				</h6>
 			</div>
 		</div>
@@ -30,29 +32,35 @@
 			<button id="btn-delete" class="btn btn-danger">글 삭제</button>
 			<hr />
 		</c:if>
-		<div class="card">
-			<div class="card-body">
-				<textarea class="form-control" rows="1"></textarea>
+		<form>
+			<input type="hidden" id="boardId" value="${detail.id }" />
+			<input type="hidden" id="userId" value="${principal.user.id }" />
+			<div class="card">
+				<div class="card-body">
+					<textarea id="reply-content" class="form-control" rows="1"></textarea>
+				</div>
+				<div class="card-footer">
+					<button type="button" id="btn-reply-save" class="btn btn-primary">등록</button>
+				</div>
 			</div>
-			<div class="card-footer">
-				<button class="btn btn-primary">등록</button>
-			</div>
-		</div>
+		</form>
 		<br>
-
 		<div class="card">
 			<div class="card-header">댓글 리스트</div>
 		</div>
-		<ul class="list-group">
-			<li class="list-group-item d-flex justify-content-between">
-				<div>내용</div>
-				<div class="d-flex">
-					<div class="bold">작성자</div>
-					<c:if test="${principal.user.id == detail.user.id}">&emsp;
-						<button class="btn btn-primary badge">삭제</button>
-					</c:if>
-				</div>
-			</li>
+		<ul id="replies" class="list-group">
+			<c:forEach var="reply" items="${detail.replies }">
+				<li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between">
+					<div>${reply.content }</div>
+					<div class="d-flex">
+						<div class="font-weight-bold">${reply.user.username }</div>
+						<c:if test="${principal.user.id == reply.user.id}">
+							&emsp;
+							<button class="btn btn-primary badge" onClick="index.replyDelete(${detail.id},${reply.id})">삭제</button>
+						</c:if>
+					</div>
+				</li>
+			</c:forEach>
 		</ul>
 	</div>
 	<br />
