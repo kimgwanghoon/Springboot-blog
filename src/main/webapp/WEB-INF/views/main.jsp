@@ -8,8 +8,13 @@
 		<c:forEach var="data" items="${list.content}">
 			<div class="card m-2">
 				<div class="card-body">
-					<h4 class="card-title">${data.title}</h4>
+					<div class="d-flex justify-content-between">
+						<h4 class="card-title">${data.title}</h4>
+						<div class="d-flex">
+						<h6>조회수 : ${data.count} </h6>&emsp; 
 					<a href="/board/${data.id}" class="btn btn-primary">상세보기</a>
+					</div>
+					</div>
 				</div>
 			</div>
 		</c:forEach>

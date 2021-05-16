@@ -63,6 +63,14 @@ public class BoardService {
 	}
 	
 	@Transactional
+	public void viewCount(int id) {
+		Board board = boardRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("상세보기실패");
+		});
+		board.setCount(board.getCount()+1);
+	}
+	
+	@Transactional
 	public void writeReply(ReplyRequestDto replyRequestDto) {
 		User user = userRepository.findById(replyRequestDto.getUserId()).orElseThrow(()->{
 			return new IllegalArgumentException("댓글 등록실패");

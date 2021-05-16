@@ -41,6 +41,7 @@ public class BoardController {
 	
 	@GetMapping("/board/{id}")
 	public String findById(@PathVariable int id,Model model) {
+		boardService.viewCount(id);
 		model.addAttribute("detail",boardService.detail(id));
 		return "board/detail";
 	}
