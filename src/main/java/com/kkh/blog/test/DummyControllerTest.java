@@ -1,9 +1,11 @@
 package com.kkh.blog.test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.junit.runner.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kkh.blog.dto.ResponseDto;
 import com.kkh.blog.model.RoleType;
 import com.kkh.blog.model.User;
 import com.kkh.blog.repository.UserRepository;

@@ -3,6 +3,7 @@ package com.kkh.blog.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kkh.blog.auth.PrincipalDetail;
+import com.kkh.blog.model.Board;
 import com.kkh.blog.model.User;
 import com.kkh.blog.repository.UserRepository;
 import com.kkh.blog.service.BoardService;
