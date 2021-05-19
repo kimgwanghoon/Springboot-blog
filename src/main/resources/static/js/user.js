@@ -58,7 +58,7 @@ let index = {
 				location.href = "/";
 			} else {
 				alert("회원정보수정에 실패하였습니다.");
-				history.back();
+				location.href = "/user/updateForm";
 			}
 		}).fail(function(error) {	
 			alert(JSON.stringify(error));
