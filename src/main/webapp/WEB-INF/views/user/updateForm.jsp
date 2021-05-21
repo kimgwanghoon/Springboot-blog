@@ -11,7 +11,7 @@
 				<label for="password">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="password"<c:if test="${not empty principal.user.oauth }">readonly</c:if>>
 			</div>
 			<div class="form-group">
-				<label for="email">Email address:</label> <input type="email" class="form-control" placeholder="Enter email" id="email" value="${principal.user.email}" <c:if test="${not empty principal.user.oauth }">readonly</c:if>>
+				<label for="email">Email address:</label> <input type="email" class="form-control" placeholder="Enter email" id="email" value="${principal.user.email}" >
 			</div>
 		</form>
 		<button id="bth-update" class="btn btn-primary">회원정보수정</button>

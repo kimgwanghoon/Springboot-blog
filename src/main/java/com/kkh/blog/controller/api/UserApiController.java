@@ -1,6 +1,7 @@
 package com.kkh.blog.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,9 @@ public class UserApiController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@Value("${blog.pwd}")
+	private String key;
+	
 	@PostMapping("/auth/signup")
 	public ResponseDto<Integer> save(@RequestBody User user) {	
 		userService.save(user);
@@ -33,8 +37,14 @@ public class UserApiController {
 	@PutMapping("/user/update")
 	public ResponseDto<Integer> update(@RequestBody User user){
 		userService.update(user);
+		User findUser = userService.findUser(user.getUsername());
+		Authentication authentication= null;
 		//세션등록
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+		if(findUser.getOauth()==null || findUser.getOauth().equals("")) {
+			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+		}else {
+			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), key));
+		}
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);

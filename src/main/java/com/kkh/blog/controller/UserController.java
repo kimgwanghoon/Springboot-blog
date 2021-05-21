@@ -35,8 +35,8 @@ public class UserController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-//	@Value("${blog.pwd}")
-//	private String key;
+	@Value("${blog.pwd}")
+	private String key;
 	
 	@GetMapping("/auth/joinForm")
 	public String joinForm() {
@@ -87,10 +87,9 @@ public class UserController {
 		}
 		
 		KakaoProfile userfile = kakaoUser(oauthToken.getAccess_token());
-		String pwd = "kakao"+userfile.getId().toString();
 		User kakaoUser = User.builder()
 				.username("kakao_"+userfile.getKakao_account().getEmail())
-				.password(pwd)
+				.password(key)
 				.email(userfile.getKakao_account().getEmail())
 				.oauth(OAuthType.kakao)
 				.build();
@@ -99,7 +98,7 @@ public class UserController {
 		if (findUser.getUsername()==null) {
 			userService.save(kakaoUser);
 		}
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), pwd));
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), key));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		return "redirect:/";
@@ -107,12 +106,11 @@ public class UserController {
 	
 	public KakaoProfile kakaoUser(String accessToken) {
 		RestTemplate rt = new RestTemplate();
-		HttpHeaders header = new HttpHeaders();	//httpheader생성
+		HttpHeaders header = new HttpHeaders();
 		header.add("Authorization", "Bearer "+accessToken);
 		header.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(header);		//HttpDeader와 HttpBody를 하나의 오브젝트에 담기 
-		//Http POST 방식으로 요청, response 변수의 응답 받기
+		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(header);
 		ResponseEntity<String> response = rt.exchange("https://kapi.kakao.com/v2/user/me",HttpMethod.POST,kakaoProfileRequest,String.class);
 		
 		ObjectMapper objectMapper = new  ObjectMapper();
